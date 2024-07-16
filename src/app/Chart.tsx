@@ -1,8 +1,17 @@
-"use client"; // Đánh dấu là Client Component
+"use client";
 
 import { Column } from '@ant-design/charts';
 
-const MyChart = ({ data }) => {
+interface DataItem {
+  name: string;
+  value: number;
+}
+
+interface MyChartProps {
+  data: DataItem[];
+}
+
+const MyChart: React.FC<MyChartProps> = ({ data }) => {
   const config = {
     data,
     xField: 'name',
