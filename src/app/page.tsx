@@ -1,9 +1,9 @@
-"use client"; // Đánh dấu là Client Component
+"use client";
 
 import React, { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic'; // Sử dụng dynamic import
+import dynamic from 'next/dynamic';
 
-const MyChart = dynamic(() => import('./Chart'), { ssr: false }); // Chỉ sử dụng ở phía client
+const MyChart = dynamic(() => import('./Chart'), { ssr: false }); 
 
 interface Booking {
   service: {
@@ -18,7 +18,7 @@ const Page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.API_URL}/bookings`);
+        const response = await fetch('http://localhost:4000/bookings?page=1&limit=5');
         const result: Booking[] = await response.json();
         const formattedData = result.map((item: Booking) => ({
           name: item.service.name,
