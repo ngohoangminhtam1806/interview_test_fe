@@ -3,14 +3,21 @@
 import React, { useEffect, useState } from 'react';
 import MyChart from './Chart'; // Đảm bảo đường dẫn đúng
 
+interface Booking {
+  service: {
+    name: string;
+  };
+  quantity: number;
+}
+
 const Page = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<{ name: string; value: number }[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('https://interview-test-be.onrender.com/bookings');
-      const result = await response.json();
-      const formattedData = result.map(item => ({
+      const result: Booking[] = await response.json();
+      const formattedData = result.map((item: Booking) => ({
         name: item.service.name,
         value: item.quantity,
       }));
