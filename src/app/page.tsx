@@ -1,7 +1,9 @@
 "use client"; // Đánh dấu là Client Component
 
 import React, { useEffect, useState } from 'react';
-import MyChart from './Chart'; // Đảm bảo đường dẫn đúng
+import dynamic from 'next/dynamic'; // Sử dụng dynamic import
+
+const MyChart = dynamic(() => import('./Chart'), { ssr: false }); // Chỉ sử dụng ở phía client
 
 interface Booking {
   service: {
@@ -15,13 +17,17 @@ const Page = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('https://interview-test-be.onrender.com/bookings');
-      const result: Booking[] = await response.json();
-      const formattedData = result.map((item: Booking) => ({
-        name: item.service.name,
-        value: item.quantity,
-      }));
-      setData(formattedData);
+      try {
+        const response = await fetch(`${process.env.API_URL}/bookings`);
+        const result: Booking[] = await response.json();
+        const formattedData = result.map((item: Booking) => ({
+          name: item.service.name,
+          value: item.quantity,
+        }));
+        setData(formattedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
 
     fetchData();

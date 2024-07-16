@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default nextConfig;
+const nextConfig = {
+    env: {
+      API_URL: 'https://interview-test-be.onrender.com',
+    },
+  };
+  
+  export default nextConfig;
+  
